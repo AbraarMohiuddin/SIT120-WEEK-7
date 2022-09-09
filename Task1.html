@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>.
+  </head>
+
+  <body>
+    <!-- Local Registration -->
+    <div id="local"> </div>
+    <br>
+    <!-- Global Registration -->
+    <div id="global"> </div>
+
+    <script>
+      // Local Registration
+      // component definition
+      const LocalRegist = {
+        template: '<div><h3>${message}</h3> <button @click="test"> Click to find out if I am Local or Global! </button></div>',
+ 
+        delimiters: ['${', '}'],
+        data: function() {
+          return {
+            message: 'Local Registered'
+          }
+        },
+
+
+        methods: {
+   
+          test: function() {
+            alert('This is Local Registered Componenent');
+          }
+        }
+      };
+
+      let local = new Vue({
+        el: '#local',
+        components: {
+          'local-regis': LocalRegist
+        },
+
+        data: {
+          num: 1
+        },
+
+        template: `<local-regis/>`
+      });
+
+      // Global Registration
+      // using template
+      Vue.component('global-regis', {
+        template: '<div><h3>${message}</h3> <button @click="test"> Click to find out if I am Local or Global! </button></div>',
+        delimiters: ['${', '}'],
+        data: function() {
+          return {
+            // data here                
+            message: 'Global Registered'
+          }
+        },
+        methods: {
+          test: function() {
+            alert('This is Global Registered Componenent');
+          }
+        }
+      })
+
+      let global = new Vue({
+        el: '#global',
+        template: `<global-regis/>`
+      });
+
+    </script>
+  </body>
+
+</html>

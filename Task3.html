@@ -1,0 +1,72 @@
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title>Week 7 task 3</title>
+
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+
+  <body>
+
+    <div id="customevents">
+        
+      <p style="padding-bottom:1%; padding-top:1%; text-align: center; font-size: 40px; background-color: red; color: black;"> Student ID: {{ studentNo }} </p>
+      <p style="padding-bottom:1%; padding-top:1%; text-align: center; font-size: 40px; background-color: blue; color: black;"> Course Name: {{ courseName }} </p>
+      <p style="padding-bottom:1%; padding-top:1%; text-align: center; font-size: 40px; background-color: green; color: black;"> Course Code: {{ courseCode }} </p>
+      <!-- The info here will be passed on to props-->
+      <!-- camel case will be transformed to kebab case-->
+      <my-info v-model:student-no="studentNo"  v-model:course-name="courseName" v-model:course-code="courseCode"></my-info>
+
+
+    <script>
+      // create the component using pascal case
+      const MyInfo = {
+        props: {
+          // accepts the studentNo, courseName, and courseCode as props
+
+          studentNo: Number,
+          courseName: String,
+          courseCode: String
+        },
+
+        // we're using $emit to pass the data from the child component back to the parent
+        // the name of an emitted event must exactly match the name used to listen to that event; source: Vue.js
+        template: `
+            <input
+            type="text"
+            :value="studentNo"
+            @input="$emit('update:studentNo', $event.target.value)">
+            <input
+            type="text"
+            :value="courseName"
+            @input="$emit('update:courseName', $event.target.value)">
+            <input
+            type="text"
+            :value="courseCode"
+            @input="$emit('update:courseCode', $event.target.value)">
+        `
+      };
+
+      // create the component
+      // using pascal case
+      const CustomEvents = {
+        components: {
+          MyInfo
+        },
+        data() {
+          return {
+            studentNo: '222054981',
+            courseName: 'Responsive Web Apps',
+            courseCode: 'SIT120'
+          };
+        },
+      };
+
+      Vue.createApp(CustomEvents).mount('#customevents')
+
+    </script>
+
+  </body>
+
+</html>
